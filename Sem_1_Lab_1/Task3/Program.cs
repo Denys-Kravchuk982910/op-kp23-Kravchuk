@@ -4,6 +4,21 @@ namespace Task3
 {
 	class Program
 	{
+        /// <summary>
+        ///     test cases:
+        ///     input:
+        ///     x = 2
+        ///     n = 5
+        ///     output: 
+        ///     n! = 120
+        ///     x^5 = 32
+        ///     input:
+        ///     x = 3
+        ///     n = 4
+        ///     output:  
+        ///     n! = 24
+        ///     x^n = 81
+        /// </summary>
 		static void Main(string[] args)
 		{
             uint numberOfFactorial = 0;

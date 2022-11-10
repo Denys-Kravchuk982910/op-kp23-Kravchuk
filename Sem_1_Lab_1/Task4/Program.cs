@@ -4,10 +4,28 @@ namespace Task4
 {
 	class Program
 	{
-		static void Main(string[] args) 
+        /// <summary>
+        ///  test cases:
+		///  input:
+		///  x = 3.14
+		///  output:
+		///  0.0084...
+		///  
+		///	 input: 
+		///	 1.57
+		///	 output: 
+		///	 1.00000
+		///	 
+		///		input: 
+		///		10
+		///		output:
+		///		0,5440211109464015
+		///		correct: -0,5440211109464015
+        /// </summary>
+        static void Main(string[] args) 
 		{
 			int a = 0;
-			double x =3;
+			double x =10;
 
 			while(x > Math.PI)
 			{
