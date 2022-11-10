@@ -4,6 +4,18 @@ namespace Task2
 {
 	class Program
 	{
+        /// <summary>
+        ///     test cases:
+        ///     input:
+        ///     x = 10
+        ///     output: not prime
+        ///     input:
+        ///     x = 11
+        ///     output: prime  
+        ///     input:
+        ///     x = 3
+        ///     output: prime
+        /// </summary>
 		static void Main(string[] args)
 		{
             int number = 0;
