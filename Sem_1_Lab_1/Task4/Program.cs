@@ -25,14 +25,17 @@ namespace Task4
         static void Main(string[] args) 
 		{
 			int a = 0;
-			double x =10;
+			double x =17;
+			int sign = 1;
+
 
 			while(x > Math.PI)
 			{
 				x -= Math.PI;
+				sign *= -1;
 			}
 
-			Console.WriteLine(Sin(x,11));
+			Console.WriteLine(sign * Sin(x,11));
 		}
 
 		static double Sin(double x, int a)

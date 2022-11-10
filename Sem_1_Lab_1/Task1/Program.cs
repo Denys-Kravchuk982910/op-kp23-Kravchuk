@@ -77,8 +77,11 @@ namespace Task1
             {
                 return 0;
             }
+
+            double degree = 3.0 / 2.0;
+
             double sqrt = Math.Sqrt(Math.Abs(x - b));
-            double pow1_5 = Math.Pow(Math.Abs(Math.Pow(b, 3) - Math.Pow(x, 3)), 3.0/2.0);
+            double pow1_5 = Math.Pow(Math.Abs(Math.Pow(b, 3) - Math.Pow(x, 3)), degree);
             double logE = Math.Log(Math.Abs(x - b));
 
             return (sqrt / pow1_5) + logE;
