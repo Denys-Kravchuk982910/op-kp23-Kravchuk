@@ -25,8 +25,14 @@ namespace Task4
         static void Main(string[] args) 
 		{
 			int a = 0;
-			double x =17;
+			double x =100;
 			int sign = 1;
+
+			if(x < 0)
+			{
+				sign = -1;
+				x = -1 * x;
+			}
 
 
 			while(x > Math.PI)
