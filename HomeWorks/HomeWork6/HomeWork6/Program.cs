@@ -17,8 +17,8 @@ namespace HomeWork6
 
             int el = BinarySearch(arr, peregyn, 3);
             Console.WriteLine(el);
-
-        }
+    {
+       
 
         static int[] BinarySearch(int[] arr, int el)
         {
