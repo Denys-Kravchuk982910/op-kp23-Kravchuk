@@ -340,5 +340,71 @@ namespace Sem_1_Lab_2_Testing
                 Console.WriteLine();
             }
         }
+
+
+        ///
+        /// Unit tests
+        /// 
+
+        static void InitialTestMatrix() 
+        {
+            open(6,3);  
+            open(7,3);  
+            open(8,3);  
+            open(9,3);  
+            open(10,3);
+
+            open(6,4);
+
+            open(6,5);
+            open(7,5);
+            open(8,5);
+            open(9,5);
+            open(10,5);
+
+
+            open(1,7);
+            open(2,7);
+            open(3,7);
+            open(4,7);
+            open(5,7);
+            open(6,7);
+            open(7,7);
+            
+            open(7,6);
+        }
+        static bool percolates_Unit()
+        {
+            InitialTestMatrix();
+            return percolates() == true;
+        }
+
+        static bool root_Unit() 
+        {
+            InitialTestMatrix();
+
+            int rowIndex = 6;
+            int colIndex = 3;
+
+            return root(rowIndex, colIndex) == 6;
+        }
+
+        static bool isOpen_Unit() 
+        {
+            InitialTestMatrix();
+            return isOpen(7,3) == true;
+        }
+
+        static bool isFull_Unit() 
+        {
+            InitialTestMatrix();
+            return isFull(9, 3) == true;
+        }
+
+        static bool numberOfOpenSites_Unit() 
+        {
+            InitialTestMatrix();
+            return numberOfOpenSites() == 19;
+        }
     }
 }
