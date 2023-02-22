@@ -11,6 +11,7 @@ namespace Task2
     /// </summary>
     class Program
 	{
+        static int LENGTH_OF_ARRAY = 10;
 		static void Main(string[] args)
 		{
             Console.OutputEncoding = Encoding.UTF8;
@@ -23,16 +24,68 @@ namespace Task2
 
 
             FileInfo file = new FileInfo(source);
-		}
+            CreateFileWithNumbers(file);
+            int maxValue = FindMaximumNumberInFile(file);
+
+            FileInfo sourceFile = new FileInfo(Path.Combine(Directory.GetCurrentDirectory(), "data", "max.txt"));
+            WriteMaxResultInFile(sourceFile, maxValue);
+        }
 
         static void CreateFileWithNumbers(FileInfo file) 
         {
-            
+            if (!file.Exists)
+            {
+                Random random = new Random();
+                using (StreamWriter sw = file.CreateText())
+                {
+                    for (int i = 0; i < LENGTH_OF_ARRAY; i++)
+                    {
+                        sw.Write(random.Next(0, 20) + " ");
+                    }
+                }
+            }
         }
 
-        static void FindMaximumNumberInFile(FileInfo file)
+        static int FindMaximumNumberInFile(FileInfo file)
         {
+            int max = -1;
+            using (StreamReader sr = file.OpenText())
+            {
+                while (!sr.EndOfStream)
+                {
+                    string numberStr = "";
+                    char item = '\0';
+                    while (item != ' ')
+                    {
+                        item = Convert.ToChar(sr.Read());
+                        numberStr += item;
+                    }
 
+                    int element = Convert.ToInt32(numberStr);
+
+                    if(element > max)
+                        max = element;
+                }
+            }
+            return max;
+        }
+
+        static void WriteMaxResultInFile(FileInfo max, int maxValue) 
+        {
+            if(!max.Exists)
+            {
+                using (StreamWriter sw = max.CreateText()) 
+                {
+                    sw.Write(maxValue);
+                }
+            }
+            else
+            {
+                using (StreamWriter sw = new StreamWriter(max.OpenWrite()))
+                {
+                    sw.Write(maxValue);
+                }
+            }
         }
 	}
 }
