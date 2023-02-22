@@ -12,6 +12,11 @@ namespace Task2
     class Program
 	{
         static int LENGTH_OF_ARRAY = 10;
+        /// <summary>
+        ///     Test case:
+        ///     Sequence of numbers: 16 8 6 12 17 8 10 8 10 7 
+        ///     The max number: 17
+        /// </summary>
 		static void Main(string[] args)
 		{
             Console.OutputEncoding = Encoding.UTF8;
