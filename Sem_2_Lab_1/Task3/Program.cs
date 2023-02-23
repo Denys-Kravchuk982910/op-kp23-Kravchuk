@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bogus;
+using System;
 using System.Text;
 
 namespace Task3
@@ -11,6 +12,7 @@ namespace Task3
     /// </summary>
     class Program
     {
+        static int MAX_WORDS_IN_FILE = 40;
         static void Main(string[] args) 
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -23,27 +25,105 @@ namespace Task3
 
 
             FileInfo file = new FileInfo(source);
+            FillFile(file);
+            string[] sorted = SortWords(file);
+
+
+            FileInfo dest = new FileInfo(Path.Combine(directory, "result.txt"));
+            WriteSortedWords(dest, sorted);
         }
 
 
         static void FillFile(FileInfo file) 
         {
-        
+            if (!file.Exists)
+            {
+                Faker faker = new Faker("en");
+                string fileWord;
+                using (StreamWriter sw = file.CreateText()) 
+                {
+                    for (int i = 0; i < MAX_WORDS_IN_FILE; i++)
+                    {
+                        fileWord = faker.Lorem.Word();
+                        sw.WriteLine(fileWord);
+                    }
+                }
+            }
         }
 
-        static void SortWords(FileInfo info)
+        static string[] SortWords(FileInfo info)
         {
+            string[] sortedWords = new string[MAX_WORDS_IN_FILE];
 
+            using (StreamReader sr = info.OpenText())
+            {
+                int counter = 1;
+                string line = sr.ReadLine();
+                sortedWords[counter - 1] = line;
+                while (!sr.EndOfStream)
+                {
+                    int i;
+                    line = sr.ReadLine();
+                    for (i = counter; i > 0 && CompareWords(line, sortedWords[i-1], counter) == -1; i--)
+                    {
+                        sortedWords[i] = sortedWords[i-1];
+                    }
+
+                    sortedWords[i+1] = line;
+
+
+                    counter++;
+                }
+            }
+
+            return sortedWords;
         }
 
-        static int CompareWords(string str1, string str2)
+
+        /// <param name="str1">First string</param>
+        /// <param name="str2">Second string</param>
+        /// <returns>Return smaller string (-1, 0, 1)</returns>
+        static int CompareWords(string str1, string str2, int counter)
         {
-            return 0;
+            // Defining of word, which has less length
+            int minLength = str1.Length;
+            int lessWord = -1;
+            if(minLength > str2.Length)
+            {
+                minLength = str2.Length;
+                lessWord = 1;
+            }
+
+            // Comparing char symbols
+            for (int i = 0; i < minLength; i++) 
+            {
+                if (str2[i] != str1[i])
+                {
+                    if (str1[i] < str2[i])
+                    {
+                        return -1;
+                    }
+                    return 1;
+                }
+            }
+
+            // Return 0, when the values have the same symbols
+            if (str1.Length == str2.Length)
+                return 0;
+            // Return lessWord, when the roots of these words are equal,
+            // but length one of them is less than other one
+            return lessWord;
         }
 
-        static void WriteSortedWords(FileInfo destination) 
+        static void WriteSortedWords(FileInfo destination, string[] sortedList) 
         {
-        
+            using (StreamWriter sw = new StreamWriter(destination.OpenWrite())) 
+            {
+                foreach (var item in sortedList)
+                {
+                    sw.WriteLine(item);
+                }
+            }
         }
 
         
