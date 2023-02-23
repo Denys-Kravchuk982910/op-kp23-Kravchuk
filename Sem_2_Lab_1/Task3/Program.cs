@@ -69,7 +69,7 @@ namespace Task3
                         sortedWords[i] = sortedWords[i-1];
                     }
 
-                    sortedWords[i+1] = line;
+                    sortedWords[i] = line;
 
 
                     counter++;
