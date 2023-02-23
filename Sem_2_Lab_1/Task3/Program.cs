@@ -33,7 +33,6 @@ namespace Task3
             WriteSortedWords(dest, sorted);
         }
 
-
         static void FillFile(FileInfo file) 
         {
             if (!file.Exists)
@@ -78,7 +77,6 @@ namespace Task3
 
             return sortedWords;
         }
-
 
         /// <param name="str1">First string</param>
         /// <param name="str2">Second string</param>
