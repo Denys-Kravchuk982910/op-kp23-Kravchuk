@@ -12,6 +12,22 @@ namespace Task6
         /// Read the binary file and create another binary file that will contain the number of the
         /// students whose score is greater than 95 and all the records for those students. 
         /// </summary>
+        /// 
+
+
+        /// Input:
+        /// FirstName,LastName,Age"Листвич,Сторожук,78Арсен,Калач,65Аскольд,Єрмак,15&Ілля,Миклашевський,96 
+        /// Герасим,Боярчук,45(Тарас,Довгалевський,32(Зборислав,Степанець,74Всевлад,Дідух,68Гордій,Ликович,79Назар,Ємець,98
+        /// 
+        /// Output:
+        /// 퀦킆킻톻ⲏ鳐룐뫐믐냐裑뗐닐臑賑뫐룐말㤬ᠶ鷐냐럐냐胑퀬킄킼통톆Ⲍ㠹
+        /// 
+        /// Input:
+        /// FirstName,LastName,Age!Ладо,Кульчицький,8$Добромисл,Трясило,56Кузьма,Іванів,80$Станіслав,Ломовий,15(Лаврентій,Дмитришин,47)
+        /// Подолян,Гриневецький,1"Всевлад,Гнатишин,97(Хвалимир,Григоришин,11$Степан,Майстренко,86 Мстислав,Яловий,85
+        /// 
+        /// Output:
+        /// "Всевлад,Гнатишин,97
         static void Main(string[] args) 
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -22,19 +38,9 @@ namespace Task6
                 Directory.CreateDirectory(directory);
             string source = Path.Combine(directory, "task6.dat");
 
-
-
             FileInfo file = new FileInfo(source);
             ReadFileWithCreatingBinaryOne(file);
             GetUsersByMaximalMark(file);
-
-            using(BinaryReader br = new BinaryReader(new FileStream(Path.Combine(Directory.GetCurrentDirectory(),
-                "data", "result.dat"), FileMode.OpenOrCreate)))
-            {
-                Console.WriteLine(br.ReadString());
-                Console.WriteLine(br.ReadString());
-                Console.WriteLine(br.ReadInt32());
-            }
         }
 
         static void ReadFileWithCreatingBinaryOne(FileInfo file) 
