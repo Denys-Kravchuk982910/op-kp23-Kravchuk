@@ -14,6 +14,50 @@ namespace Task4
     /// First Name 2, Last Name 2, 60
     /// First Name 3, Last Name 3, 51
     /// </summary>
+    /// 
+
+    /// Test cases:
+    /// 
+    /// Input:
+    /// FirstName,LastName,Age
+    /// Листвич,Сторожук,78
+    /// Арсен,Калач,65
+    /// Аскольд,Єрмак,15
+    /// Ілля,Миклашевський,92
+    /// Герасим,Боярчук,45
+    /// Тарас,Довгалевський,32
+    /// Зборислав,Степанець,74
+    /// Всевлад,Дідух,68
+    /// Гордій,Ликович,79
+    /// Назар,Ємець,82
+    /// 
+    /// Output:
+    /// Student Аскольд  Єрмак  hasn't enough points to get normal mark!
+    /// Student Герасим  Боярчук hasn't enough points to get normal mark!
+    /// Student Тарас  Довгалевський hasn't enough points to get normal mark!
+    /// 
+    /// Input:
+    /// FirstName,LastName,Age
+    /// Ладо, Кульчицький,8
+    /// Добромисл,Трясило,56
+    /// Кузьма,Іванів,80
+    /// Станіслав,Ломовий,15
+    /// Лаврентій,Дмитришин,47
+    /// Подолян,Гриневецький,1
+    /// Всевлад,Гнатишин,97
+    /// Хвалимир,Григоришин,11
+    /// Степан,Майстренко,86
+    /// Мстислав,Яловий,85
+    /// 
+    /// Output:
+    /// Student Ладо  Кульчицький  hasn't enough points to get normal mark!
+    /// Student Добромисл  Трясило hasn't enough points to get normal mark!
+    /// Student Станіслав  Ломовий hasn't enough points to get normal mark!
+    /// Student Лаврентій  Дмитришин hasn't enough points to get normal mark!
+    /// Student Подолян  Гриневецький hasn't enough points to get normal mark!
+    /// Student Хвалимир  Григоришин hasn't enough points to get normal mark!
+
+    
     class Program
     {
         static int MAX_ITEMS_IN_STUDENTS_ARRAY = 10;

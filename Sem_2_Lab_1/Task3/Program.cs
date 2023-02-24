@@ -1,6 +1,9 @@
-﻿using Bogus;
+﻿ using Bogus;
 using System;
+using System.Drawing;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
+using System.Threading;
 
 namespace Task3
 {
@@ -9,6 +12,184 @@ namespace Task3
     /// The text file contains arbitrary English words, 1 word per line, no more than 40 words in the
     /// file, the word length is limited to 80 characters.Rewrite words to another file by sorting them
     /// alphabetically.
+    /// 
+    /// 
+    /// 
+    /// Test cases: 
+    /// Bogus library is used in project to generate random words to file.
+    /// First test case: 
+    /// Input:
+    /// qui
+    /// architecto
+    /// quis
+    /// molestiae
+    /// numquam
+    /// animi
+    /// qui
+    /// vero
+    /// ratione
+    /// animi
+    /// pariatur
+    /// sed
+    /// et
+    /// laudantium
+    /// quia
+    /// ad
+    /// eum
+    /// autem
+    /// sint
+    /// tempora
+    /// voluptatem
+    /// ipsam
+    /// ex
+    /// dolor
+    /// voluptas
+    /// earum
+    /// quae
+    /// non
+    /// quia
+    /// et
+    /// aut
+    /// in
+    /// error
+    /// placeat
+    /// officia
+    /// facere
+    /// alias
+    /// voluptatem
+    /// esse
+    /// autem
+    /// 
+    /// Output:
+    /// ad
+    /// alias
+    /// animi
+    /// animi
+    /// architecto
+    /// aut
+    /// autem
+    /// autem
+    /// dolor
+    /// earum
+    /// error
+    /// esse
+    /// et
+    /// et
+    /// eum
+    /// ex
+    /// facere
+    /// in
+    /// ipsam
+    /// laudantium
+    /// molestiae
+    /// non
+    /// numquam
+    /// officia
+    /// pariatur
+    /// placeat
+    /// quae
+    /// qui
+    /// qui
+    /// quia
+    /// quia
+    /// quis
+    /// ratione
+    /// sed
+    /// sint
+    /// tempora
+    /// vero
+    /// voluptas
+    /// voluptatem
+    /// voluptatem
+    /// voluptas
+    /// voluptate
+    /// voluptatem
+    /// voluptatem
+
+    /// Input:
+    /// architecto
+    /// inventore
+    /// accusamus
+    /// ut
+    /// minima
+    /// et
+    /// aperiam
+    /// neque
+    /// expedita
+    /// fugiat
+    /// aperiam
+    /// ut
+    /// voluptatibus
+    /// eos
+    /// error
+    /// perspiciatis
+    /// quasi
+    /// magnam
+    /// in
+    /// cumque
+    /// est
+    /// facilis
+    /// fugit
+    /// explicabo
+    /// maiores
+    /// labore
+    /// et
+    /// nihil
+    /// optio
+    /// eveniet
+    /// possimus
+    /// corrupti
+    /// minus
+    /// culpa
+    /// et
+    /// odio
+    /// facilis
+    /// aut
+    /// quam
+    /// expedita
+    /// 
+    /// Output:
+    /// accusamus
+    /// aperiam
+    /// aperiam
+    /// architecto
+    /// aut
+    /// corrupti
+    /// culpa
+    /// cumque
+    /// eos
+    /// error
+    /// est
+    /// et
+    /// et
+    /// et
+    /// eveniet
+    /// expedita
+    /// expedita
+    /// explicabo
+    /// facilis
+    /// facilis
+    /// fugiat
+    /// fugit
+    /// in
+    /// inventore
+    /// labore
+    /// magnam
+    /// maiores
+    /// minima
+    /// minus
+    /// neque
+    /// nihil
+    /// odio
+    /// optio
+    /// perspiciatis
+    /// possimus
+    /// quam
+    /// quasi
+    /// ut
+    /// ut
+    /// voluptatibus
+
     /// </summary>
     class Program
     {
