@@ -20,7 +20,7 @@ namespace ConsoleApp4
             WhatIsIt(figure);
 
             Console.WriteLine("=================");
-            figure = new Circle(10);
+            figure = new Circle(5);
             PrintArea(figure);
             PrintPerymeter(figure);
             WhatIsIt(figure);
