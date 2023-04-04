@@ -22,7 +22,20 @@ namespace Task1.Tools
 
         public void Add(T newItem)
         {
-            
+            CustomItem<T> item = new CustomItem<T>(newItem);
+
+            if (current != null)
+            {
+                item = current.SetNext(item);
+            }
+
+            if (first == null)
+            {
+                first = item;
+            }
+
+            current = item;
+            _count++;
         }
 
         public T this[int key]
@@ -33,12 +46,33 @@ namespace Task1.Tools
 
         protected T GetValue(int key)
         {
-            return null;
+            var link = first;
+            if (key < 0 || key >= this._count)
+            {
+                throw new ArgumentOutOfRangeException("Key", "Key is bigger than size of collection!");
+            }
+
+            for (int i = 0; i < key; i++)
+            {
+                link = link.GetNext();
+            }
+            return link.GetValue();
         }
 
         protected void SetValue(int key, T value)
         {
-            
+            var link = first;
+            if (key < 0 || key >= this._count)
+            {
+                throw new ArgumentOutOfRangeException("Key", "Key is bigger than size of collection!");
+            }
+
+            for (int i = 0; i < key; i++)
+            {
+                link = link.GetNext();
+            }
+
+            link.SetValue(value);
         }
 
         public int Count  {
@@ -71,12 +105,14 @@ namespace Task1.Tools
 
         public CustomItem<T> SetNext(CustomItem<T> item) 
         {
-            return null;
+            this._next = item;
+            item._prev = this;
+            return item;
         }
 
         public CustomItem<T> GetNext() 
         {
-            return null;
+            return this._next;
         }
 
         public override string ToString()
