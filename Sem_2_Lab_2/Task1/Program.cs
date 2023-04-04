@@ -2,6 +2,7 @@
 using System.Text;
 using Task1.Classes;
 using Task1.Tools;
+using Task1.UnitTesting;
 
 namespace Task1
 {
@@ -9,6 +10,12 @@ namespace Task1
     {
         static void Main(string[] agrs)
         {
+            //CustomListUnit listUnit = new CustomListUnit();
+            //Console.WriteLine(   listUnit.AddUnit());
+            //Console.WriteLine(   listUnit.SetValueUnit());
+            //Console.WriteLine(   listUnit.GetValueUnit());
+
+
             Console.InputEncoding = Encoding.Unicode;
             Console.OutputEncoding = Encoding.Unicode;
             CustomList<SalaryNote> notes = new CustomList<SalaryNote>();
@@ -44,10 +51,6 @@ namespace Task1
                         Console.WriteLine("======================");
                         Console.WriteLine("S - down; W - up; Q - exit");
                     }
-
-
-
-
 
                     c = Console.ReadKey().KeyChar;
 
