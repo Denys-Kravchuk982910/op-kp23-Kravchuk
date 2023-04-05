@@ -19,6 +19,21 @@ namespace Task3.Classes
         { get => this._value;
           private set => this._value = value; }
 
+        public static bool operator > (Number n1, int n2)
+        {
+            return n1.Value > n2;
+        }
+
+        public static bool operator <(Number n1, int n2)
+        {
+            return n1.Value < n2;
+        }
+
+        public static implicit operator int(Number n1)
+        {
+            return n1.Value;
+        }
+
         public override string ToString()
         {
             return _value.ToString();

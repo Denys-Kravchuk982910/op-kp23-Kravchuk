@@ -80,7 +80,15 @@ namespace Task1.Tools
             private set => this._count = value;
         }
 
-
+        public static CustomList<T> operator + (CustomList<T> l1, CustomList<T> l2)
+        {
+            CustomList<T> ret = new CustomList<T>();
+            ret.Count = l1.Count + l2.Count;
+            ret.first = l1.first;
+            ret.current = l1.current;
+            ret.current.SetNext(l2.first);
+            return ret;
+        }
     }
 
     public class CustomItem<T> where T : class
