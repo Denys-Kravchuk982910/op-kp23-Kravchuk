@@ -11,12 +11,14 @@ namespace Task2_2.Classes
     {
         public override void PrepareToMovement()
         {
-            
+            base.PrepareToMovement();
+            Console.WriteLine("Our submarine is under of water and we are ready to conquer your goals!");
         }
 
         public override void Move()
         {
-           
+            base.Move();
+            Console.WriteLine("All engines are turned on. Let's go start!");
         }
     }
 }

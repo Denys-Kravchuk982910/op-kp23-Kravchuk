@@ -8,7 +8,15 @@ namespace Task2
     {
         static void Main(string[] args) 
         {
-           
+            Console.WriteLine("============== SailingVessel ==============");
+            Vessel sailing = new SailingVessel();
+            sailing.PrepareToMovement();
+            sailing.Move();
+            Console.WriteLine();
+            Console.WriteLine("============== Submarine ==============");
+            Vessel submarine = new Submarine();
+            submarine.PrepareToMovement();
+            submarine.Move();
         }
     }
 }
