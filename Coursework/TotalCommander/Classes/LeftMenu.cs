@@ -21,9 +21,9 @@ namespace TotalCommander.Classes
             var back = Console.BackgroundColor;
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             //40
-            for (int i = 9; i < this._explorerEntities.Count+9; i++)
+            for (int i = 9; i < this._explorerEntities.Count+9 - page*31; i++)
             {
-                if (stop < 32)
+                if ( stop < 32)
                 {
                     Console.SetCursorPosition(10, i);
                     Console.WriteLine(this._explorerEntities[page*31 + i - 9].Name);

@@ -11,6 +11,7 @@ namespace TotalCommander.Classes
     public class MainMenu
     {
         private int pageLeft = 0;
+        private int pageRight = 0;
         private int sizeOfColumn = 31;
         private int Top { get; set; } = 9;
         private LeftMenu _leftMenu { get; set; }
@@ -44,15 +45,15 @@ namespace TotalCommander.Classes
                 if (_isLeftRight)
                 {
                     _leftMenu.DisplayLeftMenu(this.pageLeft);
-                    item = _leftMenu.GetItemByIndex(index);
+                    item = _leftMenu.GetItemByIndex(this.pageLeft*sizeOfColumn+ index);
                     Console.SetCursorPosition(10, Top + index);
                     count = _leftMenu.GetCount();
                 }
 
                 if (!_isLeftRight)
                 {
-                    _rightMenu.DisplayRightMenu();
-                    item = _rightMenu.GetItemByIndex(index);
+                    _rightMenu.DisplayRightMenu(this.pageRight);
+                    item = _rightMenu.GetItemByIndex(this.pageRight * sizeOfColumn + index);
                     Console.SetCursorPosition(Console.WindowWidth / 2 + 3, Top + index);
                     count = _rightMenu.GetCount();
                 }
@@ -72,8 +73,25 @@ namespace TotalCommander.Classes
                         {
                             
                             index++;
-                            if(index >= count)
+
+                            if ((_isLeftRight ? this.pageLeft : this.pageRight) <
+                                (_isLeftRight ? _leftMenu.GetPages() : _rightMenu.GetPages()) && index >= sizeOfColumn)
                             {
+
+                                ClearSideOfMenu(_isLeftRight);
+                                if (_isLeftRight)
+                                    this.pageLeft++;
+                                else
+                                    this.pageRight++;
+
+
+                                index = 0;
+                                break;
+                            }
+
+                            if ((_isLeftRight ? this.pageLeft :this.pageRight) * sizeOfColumn + index >= count)
+                            {
+                                
                                 index = 0;
                                 break;
                             }
@@ -86,7 +104,30 @@ namespace TotalCommander.Classes
                             index--;
                             if (index < 0)
                             {
-                                index = sizeOfColumn-1;
+                                if (sizeOfColumn < count)
+                                {
+                                    index = sizeOfColumn-1;
+
+                                    if((_isLeftRight ? pageLeft : pageRight) > 0)
+                                    {
+                                        this.ClearSideOfMenu(_isLeftRight);
+
+                                        if (_isLeftRight)
+                                        {
+                                            this.pageLeft--;
+                                        }
+
+                                        if(!_isLeftRight)
+                                        {
+                                            this.pageRight--;
+                                        }
+                                    }
+                                }
+
+                                if(sizeOfColumn > count)
+                                {
+                                    index = count-1;
+                                }
                             }
 
                             break; 
@@ -98,9 +139,9 @@ namespace TotalCommander.Classes
                             {
                                 Console.SetCursorPosition(Console.WindowWidth / 2 + 3, Top + index);
                                 Console.WriteLine(item.Name);
-                                if(_rightMenu.GetCount() > _leftMenu.GetCount())
+                                if(_rightMenu.GetCount()-this.pageRight*31 > _leftMenu.GetCount()- this.pageLeft * 31)
                                 {
-                                    index = _leftMenu.GetCount() - 1;
+                                    index = _leftMenu.GetCount() - this.pageLeft*31 - 1;
                                 }
                                 _isLeftRight = true;
                             }
@@ -113,9 +154,9 @@ namespace TotalCommander.Classes
                             {
                                 Console.SetCursorPosition(10, Top + index);
                                 Console.WriteLine(item.Name);
-                                if (_rightMenu.GetCount() < _leftMenu.GetCount())
+                                if (_rightMenu.GetCount() - this.pageRight * 31 < _leftMenu.GetCount() - this.pageLeft * 31)
                                 {
-                                    index = _rightMenu.GetCount() - 1;
+                                    index = _rightMenu.GetCount() -this.pageRight * 31 - 1;
                                 }
                                 _isLeftRight = false;
                             }
@@ -126,6 +167,24 @@ namespace TotalCommander.Classes
                 Console.BackgroundColor = defBack;
             }
         }
+
+        public void ClearSideOfMenu(bool isLeftRight)
+        {
+            int top = 9;
+            int width = isLeftRight ? Console.WindowWidth / 2 : Console.WindowWidth;
+            int left = isLeftRight ? 10 : Console.WindowWidth / 2 + 2;
+
+            for (int i = 0; i < sizeOfColumn; i++)
+            {
+                for (int j = left; j < width; j++)
+                {
+                    Console.SetCursorPosition(j, top + i);
+                    Console.Write(" ");
+                }
+            }
+        }
+
+
 
         public ExplorerEntity GetType(FileSystemInfo item)
         {

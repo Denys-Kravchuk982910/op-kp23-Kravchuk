@@ -17,10 +17,12 @@ namespace TotalCommander.Abstracts
             return _explorerEntities.Count;
         }
 
-        public int GetPages ()
+        public int GetPages()
         {
             return this.pages;
         }
+
+
 
         public ExplorerEntity GetItemByIndex(int index)
         {
