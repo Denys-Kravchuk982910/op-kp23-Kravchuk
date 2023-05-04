@@ -22,7 +22,7 @@ namespace TotalCommander.Services
             
             foreach (var file in Directory.GetFiles(path))
             {
-                inners.Add(new DirectoryInfo(file));
+                inners.Add(new FileInfo(file));
             }
 
             return inners;

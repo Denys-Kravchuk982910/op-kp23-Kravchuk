@@ -38,5 +38,66 @@ namespace TotalCommander.Services
             Console.WriteLine();
             Console.WriteLine();
         }
+
+        public static void MakeBackground()
+        {
+            var back = Console.BackgroundColor;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            for (int i = 6; i < Console.WindowHeight / 2 + 21; i++)
+            {
+                for (int j = 0; j < Console.WindowWidth; j++)
+                {
+                    Console.SetCursorPosition(j, i);
+                    Console.WriteLine(" ");
+                }
+            }
+
+            Console.BackgroundColor = back;
+        }
+
+        public static void MakeBorders()
+        {
+            var back = Console.BackgroundColor;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            var fore = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            int start = 8;
+            for(int i = start; i < Console.WindowWidth/2; i++)
+            {
+                Console.SetCursorPosition(i, start);
+                Console.WriteLine("_");
+
+                Console.SetCursorPosition(Console.WindowWidth / 2 -start +i, start);
+                Console.WriteLine("_");
+
+                Console.SetCursorPosition(i, Console.WindowHeight-1);
+                Console.WriteLine("_");
+
+                Console.SetCursorPosition(Console.WindowWidth / 2 - start + i, Console.WindowHeight-1);
+                Console.WriteLine("_");
+            }
+
+
+            start++;
+            for (int i = start; i < Console.WindowHeight; i++)
+            {
+                Console.SetCursorPosition(start-1, i);
+                Console.WriteLine("|");
+
+                Console.SetCursorPosition(Console.WindowWidth-10, i);
+                Console.WriteLine("|");
+                
+                Console.SetCursorPosition(Console.WindowWidth/2, i);
+                Console.WriteLine("||");
+            }
+
+            //Console.SetCursorPosition(start, i);
+            //Console.WriteLine("*");
+
+
+            Console.ForegroundColor = fore;
+            Console.BackgroundColor = back;
+
+        }
     }
 }
