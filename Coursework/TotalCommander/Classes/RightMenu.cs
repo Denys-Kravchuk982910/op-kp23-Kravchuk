@@ -24,6 +24,10 @@ namespace TotalCommander.Classes
             //40
             for (int i = 9; i < this._explorerEntities.Count + 9 - page*31; i++)
             {
+                if(stop == 1)
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                }
                 if(stop < 32)
                 {
                     Console.SetCursorPosition(Console.WindowWidth / 2 + 3, i);
@@ -31,6 +35,10 @@ namespace TotalCommander.Classes
                     stop++;
                 }
 
+                if (stop == 2)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkBlue;
+                }
             }
 
             Console.BackgroundColor = back;

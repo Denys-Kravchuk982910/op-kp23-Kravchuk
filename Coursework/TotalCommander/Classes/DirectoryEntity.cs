@@ -15,6 +15,7 @@ namespace TotalCommander.Classes
         {
             this._directoryInfo = directoryInfo;
             this.Name = directoryInfo.Name;
+            this.Path = directoryInfo.FullName;
         }
 
         public override void CreateEntity(string path, string file)

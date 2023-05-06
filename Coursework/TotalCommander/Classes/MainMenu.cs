@@ -33,11 +33,13 @@ namespace TotalCommander.Classes
                 ));
         }
 
-        public void StartApplication() 
+        public void StartApplication()
         {
+            bool isPrinted = false;
+            bool isPrintedEnd = false;
             var defBack = Console.BackgroundColor;
             int index = 0;
-            ConsoleKey key =ConsoleKey.Enter;
+            ConsoleKey key = ConsoleKey.Enter;
             while (key != ConsoleKey.Escape)
             {
                 int count = 0;
@@ -45,7 +47,7 @@ namespace TotalCommander.Classes
                 if (_isLeftRight)
                 {
                     _leftMenu.DisplayLeftMenu(this.pageLeft);
-                    item = _leftMenu.GetItemByIndex(this.pageLeft*sizeOfColumn+ index);
+                    item = _leftMenu.GetItemByIndex(this.pageLeft * sizeOfColumn + index);
                     Console.SetCursorPosition(10, Top + index);
                     count = _leftMenu.GetCount();
                 }
@@ -58,20 +60,27 @@ namespace TotalCommander.Classes
                     count = _rightMenu.GetCount();
                 }
 
-                Console.BackgroundColor = ConsoleColor.White;
+                Console.BackgroundColor = index != 0 ? ConsoleColor.White : ConsoleColor.Red;
+
+
 
                 Console.WriteLine(item.Name);
-               
-               
-                
-                key = Console.ReadKey(true).Key;
+
+                if(!isPrinted)
+                {
+                    key = Console.ReadKey(true).Key;
+                }else
+                {
+                    isPrinted = false;
+                }
+
                 Console.BackgroundColor = ConsoleColor.DarkBlue;
                 switch (key)
                 {
                     case ConsoleKey.S:
                     case ConsoleKey.DownArrow:
                         {
-                            
+
                             index++;
 
                             if ((_isLeftRight ? this.pageLeft : this.pageRight) <
@@ -89,9 +98,9 @@ namespace TotalCommander.Classes
                                 break;
                             }
 
-                            if ((_isLeftRight ? this.pageLeft :this.pageRight) * sizeOfColumn + index >= count)
+                            if ((_isLeftRight ? this.pageLeft : this.pageRight) * sizeOfColumn + index >= count)
                             {
-                                
+
                                 index = 0;
                                 break;
                             }
@@ -106,9 +115,9 @@ namespace TotalCommander.Classes
                             {
                                 if (sizeOfColumn < count)
                                 {
-                                    index = sizeOfColumn-1;
+                                    index = sizeOfColumn - 1;
 
-                                    if((_isLeftRight ? pageLeft : pageRight) > 0)
+                                    if ((_isLeftRight ? pageLeft : pageRight) > 0)
                                     {
                                         this.ClearSideOfMenu(_isLeftRight);
 
@@ -117,20 +126,20 @@ namespace TotalCommander.Classes
                                             this.pageLeft--;
                                         }
 
-                                        if(!_isLeftRight)
+                                        if (!_isLeftRight)
                                         {
                                             this.pageRight--;
                                         }
                                     }
                                 }
 
-                                if(sizeOfColumn > count)
+                                if (sizeOfColumn > count)
                                 {
-                                    index = count-1;
+                                    index = count - 1;
                                 }
                             }
 
-                            break; 
+                            break;
                         }
                     case ConsoleKey.LeftArrow:
                     case ConsoleKey.A:
@@ -139,11 +148,16 @@ namespace TotalCommander.Classes
                             {
                                 Console.SetCursorPosition(Console.WindowWidth / 2 + 3, Top + index);
                                 Console.WriteLine(item.Name);
-                                if(_rightMenu.GetCount()-this.pageRight*31 > _leftMenu.GetCount()- this.pageLeft * 31)
+                                if (!isPrintedEnd && _rightMenu.GetCount() - this.pageRight * 31 > _leftMenu.GetCount() - this.pageLeft * 31)
                                 {
-                                    index = _leftMenu.GetCount() - this.pageLeft*31 - 1;
+                                    index = _leftMenu.GetCount() - this.pageLeft * 31 - 1;
+                                    
+                                }else
+                                {
+                                    index = 0;
                                 }
                                 _isLeftRight = true;
+                                isPrintedEnd = false;
                             }
                             break;
                         }
@@ -154,24 +168,72 @@ namespace TotalCommander.Classes
                             {
                                 Console.SetCursorPosition(10, Top + index);
                                 Console.WriteLine(item.Name);
-                                if (_rightMenu.GetCount() - this.pageRight * 31 < _leftMenu.GetCount() - this.pageLeft * 31)
+                                if (!isPrintedEnd && _rightMenu.GetCount() - this.pageRight * 31 < _leftMenu.GetCount() - this.pageLeft * 31)
                                 {
-                                    index = _rightMenu.GetCount() -this.pageRight * 31 - 1;
+                                    index = _rightMenu.GetCount() - this.pageRight * 31 - 1;
+                                }else
+                                {
+                                    index = 0;
                                 }
                                 _isLeftRight = false;
+                                isPrintedEnd = false;
+                            }
+                            break;
+                        }
+                    case ConsoleKey.Enter:
+                        {
+                            if (item is DirectoryEntity)
+                            {
+                                
+                                string fullPath = item.Path;
+
+                                DirectoryService.StartPosition = fullPath;
+
+                                if (_isLeftRight)
+                                {
+                                    _rightMenu.ClearItems();
+                                    _rightMenu.SetNewItems(new List<ExplorerEntity>(
+                                        DirectoryService.GetInnerFromDirectory(
+                                        fullPath)
+                                        .Select(x => GetType(x))
+                                    ));
+
+                                    isPrinted = true;
+
+                                }
+
+                                if (!_isLeftRight)
+                                {
+                                    _leftMenu.ClearItems();
+                                    _leftMenu.SetNewItems(new List<ExplorerEntity>(
+                                        DirectoryService.GetInnerFromDirectory(
+                                        fullPath)
+                                        .Select(x => GetType(x))
+                                    ));
+
+                                    isPrinted = true;
+                                }
+
+                                ClearSideOfMenu(!_isLeftRight);
+                                
                             }
                             break;
                         }
                 }
-
                 Console.BackgroundColor = defBack;
+
+                if(isPrinted)
+                {
+                    key = _isLeftRight ? ConsoleKey.RightArrow : ConsoleKey.LeftArrow;
+                    isPrintedEnd = true;
+                }
             }
         }
 
         public void ClearSideOfMenu(bool isLeftRight)
         {
             int top = 9;
-            int width = isLeftRight ? Console.WindowWidth / 2 : Console.WindowWidth;
+            int width = isLeftRight ? Console.WindowWidth / 2 : Console.WindowWidth-10;
             int left = isLeftRight ? 10 : Console.WindowWidth / 2 + 2;
 
             for (int i = 0; i < sizeOfColumn; i++)

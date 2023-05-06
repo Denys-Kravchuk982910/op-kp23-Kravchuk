@@ -23,11 +23,19 @@ namespace TotalCommander.Classes
             //40
             for (int i = 9; i < this._explorerEntities.Count+9 - page*31; i++)
             {
+                if (stop == 1)
+                {
+                    Console.BackgroundColor = ConsoleColor.Red;
+                }
                 if ( stop < 32)
                 {
                     Console.SetCursorPosition(10, i);
                     Console.WriteLine(this._explorerEntities[page*31 + i - 9].Name);
                     stop++;
+                }
+                if (stop == 2)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkBlue;
                 }
             }
 

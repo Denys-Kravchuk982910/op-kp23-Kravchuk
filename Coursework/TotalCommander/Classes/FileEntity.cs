@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace TotalCommander.Classes
             _fileInfo = fileInfo;
             this.Name = fileInfo.Name;
             this.Extension = fileInfo.Extension;
+            this.Path = fileInfo.FullName;
+
         }
 
         public override void CreateEntity(string path, string file)

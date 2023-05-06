@@ -10,6 +10,7 @@ namespace TotalCommander.Abstracts
     public abstract class ExplorerEntity : IExplorerEntity
     {
         public string Name { get; protected set; }
+        public string Path { get; protected set; }
 
         public virtual void CreateEntity(string path, string file)
         {
