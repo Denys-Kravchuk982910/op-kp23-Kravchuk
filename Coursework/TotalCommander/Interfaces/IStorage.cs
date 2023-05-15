@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace TotalCommander.Interfaces
 {
-    public interface IExplorerEntity
+    public interface IStorage<Key>
     {
-        void CreateEntity();
-        void MoveEntity(string source, string destination);
-        void DeleteEntity();
+        Dictionary<string, Key> GetAllLines();
+        Key GetByIndex(string param);
     }
 }

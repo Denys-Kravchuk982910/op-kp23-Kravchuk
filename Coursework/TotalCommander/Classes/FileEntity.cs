@@ -11,25 +11,32 @@ namespace TotalCommander.Classes
     public class FileEntity : ExplorerEntity
     {
         protected FileInfo _fileInfo { get; set; }
-        protected string Extension;
 
-        public FileEntity(FileInfo fileInfo)
+        public FileEntity(string name, string path) : base(name, path)
+        {
+        }
+
+
+        public FileEntity(FileInfo fileInfo) : base(fileInfo.Name, fileInfo!.Directory!.FullName)
         {
             _fileInfo = fileInfo;
-            this.Name = fileInfo.Name;
-            this.Extension = fileInfo.Extension;
-            this.Path = fileInfo.FullName;
-
         }
 
-        public override void CreateEntity(string path, string file)
+        public override void CreateEntity()
         {
-            base.CreateEntity(path, file);
+            string file = System.IO.Path.Combine(this.Path, this.Name);
+            if(!File.Exists(file))
+            {
+
+                FileStream fs = File.Create(file);
+                fs.Dispose();
+            }
         }
 
-        public override void DeleteEntity(string path)
+        public override void DeleteEntity()
         {
-            base.DeleteEntity(path);
+            if(this._fileInfo != null)  
+                this._fileInfo.Delete();
         }
         public override void MoveEntity(string source, string destination)
         {

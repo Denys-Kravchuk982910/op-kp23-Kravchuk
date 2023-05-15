@@ -17,13 +17,12 @@ namespace TotalCommander.Classes
         public void DisplayLeftMenu(int page = 0)
         {
             int stop = 1;
-            int start = 9;
             var back = Console.BackgroundColor;
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             //40
             for (int i = 9; i < this._explorerEntities.Count+9 - page*31; i++)
             {
-                if (stop == 1)
+                if (stop == 1 && page == 0)
                 {
                     Console.BackgroundColor = ConsoleColor.Red;
                 }
@@ -33,7 +32,7 @@ namespace TotalCommander.Classes
                     Console.WriteLine(this._explorerEntities[page*31 + i - 9].Name);
                     stop++;
                 }
-                if (stop == 2)
+                if (stop == 2 && page == 0 )
                 {
                     Console.BackgroundColor = ConsoleColor.DarkBlue;
                 }

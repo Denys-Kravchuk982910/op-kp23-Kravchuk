@@ -8,6 +8,7 @@ namespace TotalCommander.Services
 {
     public static class DesignOfWindow
     {
+        private static List<string> _options { get; set; }
         public static void MakeLogo() 
         {
             ConsoleColor defaultB = Console.BackgroundColor;
@@ -98,6 +99,47 @@ namespace TotalCommander.Services
             Console.ForegroundColor = fore;
             Console.BackgroundColor = back;
 
+        }
+
+        public static void MakePointers(List<string> options)
+        {
+            _options = options;
+            ClearConsoleLine(String.Join("  |  ", options.Select(x => x)));
+        }
+
+        public static string ClearConsoleLine(string? text = null, bool question = false) 
+        {
+            string output = " ";
+            var defBack = Console.BackgroundColor;
+            var defFore = Console.ForegroundColor;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            int left = 10;
+            int top = 7;
+            while (left < (Console.WindowWidth) - 10)
+            {
+                Console.SetCursorPosition(left, top);
+                Console.Write(" ");
+                left++;
+            }
+            if(text != null && !question)
+            {
+                Console.SetCursorPosition(10, top);
+                Console.WriteLine(text);
+            }
+            
+            if(text != null && question)
+            {
+                Console.SetCursorPosition(10, top);
+                Console.Write(text);
+                output = Console.ReadLine()!;
+                ClearConsoleLine(String.Join("  |  ", _options.Select(x => x)));
+            }
+
+            Console.BackgroundColor = defBack;
+            Console.ForegroundColor = defFore;
+
+            return output!;
         }
     }
 }

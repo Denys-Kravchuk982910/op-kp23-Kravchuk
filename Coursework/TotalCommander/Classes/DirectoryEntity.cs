@@ -11,21 +11,31 @@ namespace TotalCommander.Classes
     {
         private DirectoryInfo _directoryInfo { get; set; }
 
-        public DirectoryEntity(DirectoryInfo directoryInfo)
+        public DirectoryEntity(string path, string name) : base(name, path)
+        {
+
+        }
+
+        public DirectoryEntity(DirectoryInfo directoryInfo) : base(directoryInfo.Name, directoryInfo!.Parent!.FullName)
         {
             this._directoryInfo = directoryInfo;
-            this.Name = directoryInfo.Name;
-            this.Path = directoryInfo.FullName;
         }
 
-        public override void CreateEntity(string path, string file)
+        public override void CreateEntity()
         {
-            base.CreateEntity(path, file);
+            string directory = System.IO.Path.Combine(this.Path, this.Name);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
         }
 
-        public override void DeleteEntity(string path)
+        public override void DeleteEntity()
         {
-            base.DeleteEntity(path);
+            if(_directoryInfo != null)
+            {
+                _directoryInfo.Delete(true);
+            }
         }
 
         public override void MoveEntity(string source, string destination)

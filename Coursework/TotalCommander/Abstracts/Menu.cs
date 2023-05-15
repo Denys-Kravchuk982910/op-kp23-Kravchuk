@@ -14,6 +14,17 @@ namespace TotalCommander.Abstracts
     {
         protected int pages = 0;
         protected List<ExplorerEntity> _explorerEntities;
+        protected string CurrentPosition;
+
+        public string GetCurrentPosition()
+        {
+            return this.CurrentPosition;
+        }
+
+        public void SetCurrentPosition(string pos)
+        {
+             this.CurrentPosition = pos;
+        }
 
         public int GetCount()
         {
@@ -25,19 +36,22 @@ namespace TotalCommander.Abstracts
             return this.pages;
         }
 
-
-
         public ExplorerEntity GetItemByIndex(int index)
         {
             return _explorerEntities[index];
         }
+
         public Menu(List<ExplorerEntity> explorerEntities)
         {
+            this.CurrentPosition = DirectoryService.StartPosition;
             this._explorerEntities = new List<ExplorerEntity>();
-            this._explorerEntities.Add(new DirectoryEntity(new DirectoryInfo(Path.Combine(DirectoryService.StartPosition,
+            
+            this._explorerEntities.Add(new DirectoryEntity(new DirectoryInfo(Path.Combine(this.GetCurrentPosition(),
                 ".."))));
-            this._explorerEntities.AddRange(explorerEntities);  
-            this.pages = (int)Math.Floor((double)this._explorerEntities.Count / 31);
+            this._explorerEntities.AddRange(explorerEntities);
+            double res = (double)this._explorerEntities.Count / 31;
+            double floored = Math.Ceiling(res);
+            this.pages = (int)floored;
         }
 
         public virtual void DisplayItemsWithMenu()
@@ -48,9 +62,21 @@ namespace TotalCommander.Abstracts
             }
         }
 
+        public void UpdateMenu() 
+        {
+            ClearItems();
+
+            SetNewItems(new List<ExplorerEntity>(
+                DirectoryService.GetInnerFromDirectory(
+                this.GetCurrentPosition()) 
+                .Select(x => MainMenu.GetType(x))
+                ));
+        }
+
         public void ClearItems()
         {
             this._explorerEntities.Clear();
+            
         }
 
         public void SetNewItems(List<ExplorerEntity> explorerEntities)
@@ -59,6 +85,9 @@ namespace TotalCommander.Abstracts
             this._explorerEntities.Add(new DirectoryEntity(new DirectoryInfo(Path.Combine(DirectoryService.StartPosition, 
                 ".."))));
             this._explorerEntities.AddRange( explorerEntities);
+            double res = (double)this._explorerEntities.Count / 31;
+            double floored = Math.Ceiling(res);
+            this.pages = (int)floored;
         }
     }
 }

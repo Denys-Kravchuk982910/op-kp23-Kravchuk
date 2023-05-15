@@ -12,12 +12,18 @@ namespace TotalCommander.Abstracts
         public string Name { get; protected set; }
         public string Path { get; protected set; }
 
-        public virtual void CreateEntity(string path, string file)
+        public ExplorerEntity(string name, string path)
+        {
+            Name = name;
+            Path = path;
+        }
+
+        public virtual void CreateEntity()
         {
             throw new NotImplementedException();
         }
 
-        public virtual void DeleteEntity(string path)
+        public virtual void DeleteEntity()
         {
             throw new NotImplementedException();
         }
