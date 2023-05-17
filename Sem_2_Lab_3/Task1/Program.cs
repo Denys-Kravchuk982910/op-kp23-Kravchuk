@@ -6,8 +6,20 @@ namespace Task1
     {
         static void Main(string[] args) 
         {
+            UnitTest();
+        }
+
+        static void UnitTest()
+        {
             Deque<string> queue = new Deque<string>();
 
+            //Added in the range:
+            /// string1
+            /// string2
+            /// string3
+            /// string4
+            /// string5
+            /// string6
             queue.addFirst("string3");
             queue.addFirst("string2");
             queue.addFirst("string1");
@@ -15,17 +27,36 @@ namespace Task1
             queue.addLast("string5");
             queue.addLast("string6");
 
-            queue.removeLast();
-            queue.removeFirst();
+            /// Removed Last Item
+            if (queue.removeLast() == "string6")
+            {
+                Console.WriteLine("String6 was removed!");
+            }
+            /// Removed First Item
+            if (queue.removeFirst() == "string1")
+            {
+                Console.WriteLine("String1 was removed!");
+            }
 
-            queue.addFirst("string1");
 
-            queue.addLast("string6");
+            if (queue.size() == 4)
+            {
+                Console.WriteLine("The size was shown correctly!");
+            }
 
-            Console.WriteLine(queue.size());
+            if (queue.isEmpty() == false)
+            {
+                Console.WriteLine("The empty property showed false");
+            }
 
-            Console.WriteLine(queue.isEmpty());
-
+            // The strings were shown in such order:
+            /// string2
+            /// string3
+            /// string4
+            /// string5
+            /// 
+            Console.WriteLine("=======================");
+            Console.WriteLine("Testing iterator:");
             IIterator<string> it = queue.iterator();
             while (it.HasNext)
             {
@@ -134,6 +165,9 @@ namespace Task1
                 {
                     _currentItem = _currentItem.Next;
                 }
+
+                Item val = _currentItem.Next.Value;
+
                 _currentItem.Next = null!;
                 _currentItem = _collection;
 
@@ -142,7 +176,7 @@ namespace Task1
                     _collection = null!;
                     _currentItem = null!;
                 } 
-                return _currentItem.Value;
+                return val;
             }
 
             return default!;
@@ -156,7 +190,7 @@ namespace Task1
         // unit testing (required)
         public static void main(String[] args)
         {
-
+            
         }
         public Item MoveNext()
         {
