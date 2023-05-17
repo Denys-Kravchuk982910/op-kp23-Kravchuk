@@ -76,13 +76,11 @@ namespace Task1
             this._collection = null!;
             this._currentItem = null!;
         }
-        
         // is the deque empty?
         public bool isEmpty()
         {
             return !this.HasNext;    
-        }
-        
+        } 
         // return the number of items on the deque
         public int size()
         {
@@ -141,7 +139,6 @@ namespace Task1
             this._collection!.Value = item;
             this._collection.Next = null!;
         }
-        
         // remove and return the item from the front
         public Item removeFirst()
         {
@@ -154,7 +151,6 @@ namespace Task1
             }
             return default!;
         }
-
         // remove and return the item from the back
         public Item removeLast()
         {
@@ -186,11 +182,6 @@ namespace Task1
         {
             this._currentItem = this._collection;
             return this;
-        }
-        // unit testing (required)
-        public static void main(String[] args)
-        {
-            
         }
         public Item MoveNext()
         {
