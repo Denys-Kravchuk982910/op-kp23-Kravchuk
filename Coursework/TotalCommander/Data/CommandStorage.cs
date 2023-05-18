@@ -31,7 +31,7 @@ namespace TotalCommander.Data
                         }
                     case "mv":
                         {
-                            Func<string, string, string> act = CommandService.Move;
+                            Func<string, string> act = CommandService.Move;
                             dict["mv"] = act;
                             break;
                         }

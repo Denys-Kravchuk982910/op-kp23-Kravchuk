@@ -13,8 +13,13 @@ namespace TotalCommander.Services
             return path;
         }
 
-        public static string Move(string source, string destination)
+        public static string Move(string source)
         {
+            string[] items = source.Split("_from_");
+            string destination = items[0];
+            string sourcePath = items[1];
+            string sourceName = items[2];
+
             return "";
         }
 

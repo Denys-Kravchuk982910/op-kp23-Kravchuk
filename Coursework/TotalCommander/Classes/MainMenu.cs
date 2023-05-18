@@ -344,7 +344,11 @@ namespace TotalCommander.Classes
 
                             int countOfEntities = commandText.Split(" ").Length;
                             string result = (string)_commandStorage[command].DynamicInvoke(
-                                countOfEntities > 1 ? param : item.Path
+                                countOfEntities > 1 ? 
+                                (command == "mv"?
+                                param + "_from_" + item.Path + "_from_" + item.Name : "")
+                                
+                                : item.Path
                                 )!;
 
                             switch (command)
