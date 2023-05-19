@@ -11,7 +11,45 @@ namespace Task1
 
         static void UnitTest()
         {
-            
+            Deque<string> deque = new Deque<string>(5);
+            /// output:
+            /// string1
+            /// string2
+            /// string3
+            /// string4
+            /// string5
+            deque.addFirst("string3");
+            deque.addLast("string4");
+            deque.addFirst("string2");
+            deque.addLast("string5");
+            deque.addFirst("string1");
+
+
+            /// output:
+            /// string2
+            deque.removeLast();
+            deque.removeLast();
+            deque.removeFirst();
+            deque.removeLast();
+
+
+            /// output:
+            /// string-1
+            /// string0
+            /// string1
+            /// string4
+            /// string3
+            deque.addFirst("string1");
+            deque.addLast("string4");
+            deque.addFirst("string0");
+            deque.addFirst("string-1");
+            deque.addLast("string3");
+
+            var it = deque.iterator();
+            while (it.HasNext)
+            {
+                Console.WriteLine(it.MoveNext());
+            }
         }
     }
 
