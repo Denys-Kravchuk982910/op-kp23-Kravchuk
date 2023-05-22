@@ -6,7 +6,56 @@ namespace Task2
     {
         static void Main(string[] args)
         {
-            
+            RandomizedQueue<string> randomizedQueue = new RandomizedQueue<string>(5);
+
+            randomizedQueue.enqueue("string1");
+            randomizedQueue.enqueue("string2");
+            randomizedQueue.enqueue("string3");
+            randomizedQueue.enqueue("string4");
+            randomizedQueue.enqueue("string5");
+
+
+            IIterator<string> iterator = randomizedQueue.iterator();
+
+            while (iterator.HasNext)
+            {
+                Console.WriteLine(iterator.MoveNext());
+            }
+
+
+            Console.WriteLine("=============samples==========");
+
+
+            Console.WriteLine(randomizedQueue.sample());
+            Console.WriteLine(randomizedQueue.sample());
+            Console.WriteLine(randomizedQueue.sample());
+
+            Console.WriteLine("==============================");
+
+            Console.WriteLine("=============dequees==========");
+
+            Console.WriteLine(randomizedQueue.dequeue());
+            Console.WriteLine(randomizedQueue.dequeue());
+            Console.WriteLine(randomizedQueue.dequeue());
+            Console.WriteLine("==============================");
+
+            Console.WriteLine("=============samples==========");
+
+            Console.WriteLine(randomizedQueue.sample());
+            Console.WriteLine(randomizedQueue.sample());
+            Console.WriteLine(randomizedQueue.sample());
+
+            Console.WriteLine("==============================");
+
+            Console.WriteLine("==============================");
+
+            iterator = randomizedQueue.iterator();
+
+            while (iterator.HasNext)
+            {
+                Console.WriteLine(iterator.MoveNext());
+            }
+
         }
     }
 
