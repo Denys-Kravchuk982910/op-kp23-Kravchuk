@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 
 namespace Task1
 {
@@ -25,27 +26,38 @@ namespace Task1
             deque.addFirst("string1");
 
 
+            var it = deque.iterator();
+            while (it.HasNext)
+            {
+                Console.WriteLine(it.MoveNext());
+            }
+
+            Console.WriteLine("====================");
             /// output:
             /// string2
             deque.removeLast();
             deque.removeLast();
             deque.removeFirst();
             deque.removeLast();
+            
+            it = deque.iterator();
+            while (it.HasNext)
+            {
+                Console.WriteLine(it.MoveNext());
+            }
 
-
-            /// output:
+            Console.WriteLine("=======");
             /// string-1
             /// string0
             /// string1
+            /// string2
             /// string4
-            /// string3
             deque.addFirst("string1");
             deque.addLast("string4");
             deque.addFirst("string0");
             deque.addFirst("string-1");
-            deque.addLast("string3");
 
-            var it = deque.iterator();
+            it = deque.iterator();
             while (it.HasNext)
             {
                 Console.WriteLine(it.MoveNext());
@@ -55,17 +67,25 @@ namespace Task1
 
     public class Deque<Item> : IIterator<Item>
     {
-        public bool HasNext => (this._high - this._low) + 1 != this._sizeOfArray;
+        public bool HasNext => (this._tempHigh - this._tempLow) + 1  != this._sizeOfArray;
         public Item[] items;
         private int _sizeOfArray;
         private int _low;
         private int _high;
+
+
+        private int _tempLow;
+        private int _tempHigh;
         // construct an empty deque
         public Deque(int sizeOfArray)
         {
             this._sizeOfArray = sizeOfArray;
             this._low = 0;
             this._high = sizeOfArray-1;
+
+            this._tempHigh = this._high;
+            this._tempLow = this._low;
+
             items = new Item[sizeOfArray];
         }
         // is the deque empty?
@@ -81,7 +101,7 @@ namespace Task1
         // add the item to the front
         public void addFirst(Item item)
         {
-            if(this._low < this._high)
+            if(this._low <= this._high)
             {
                 this.items[_low] = item;
                 _low++;
@@ -110,9 +130,9 @@ namespace Task1
                     return items[ind];
                 }
 
-                if (this._high - this._low < this._sizeOfArray)
+                if (Math.Abs(this._low) < this._sizeOfArray - this._high)
                 {
-                    int ind = this._high + this._low;
+                    int ind = this._sizeOfArray - 1 + this._low;
                     this._low--;
                     return this.items[ind];
                 }
@@ -126,15 +146,15 @@ namespace Task1
             {
                 if (this._high < _sizeOfArray + (this._low > 0 ? 0 : this._low) - 1)
                 {
-                    int ind = this._high;
                     this._high++;
+                    int ind = this._high;
                     return items[ind];
                 }
 
                 if (this._low >= 0)
                 {
-                    int ind = this._sizeOfArray - this._high-1;
                     this._high++;
+                    int ind = this._sizeOfArray - this._high;
                     return this.items[Math.Abs(ind)];
                 }
             }
@@ -143,25 +163,29 @@ namespace Task1
         // return an iterator over items in order from front to back
         public IIterator<Item> iterator()
         {
+            this._tempHigh = this._high;
+            this._tempLow = this._low;
             return this;
         }
         public Item MoveNext()
         {
-            if(_low > 0)
+            if (_tempLow > 0)
             {
-                var item = items[this._low-1];
-                this._low--;
+                this._tempLow--;
+                var item = items[this._tempLow];
                 return item;
             }
 
-            if(Math.Abs(this._low) < this._high + this._low + 1)
+            if (Math.Abs(this._tempLow) < this._sizeOfArray - this._tempHigh)
             {
-                var item = items[this._sizeOfArray-1+this._low];
-                this._low--;
+                var item = items[this._sizeOfArray - 1 + this._tempLow];
+                this._tempLow--;
                 return item;
-            }else
+            }
+            else
             {
-                this._high = this._sizeOfArray - 1;
+                this._tempHigh = this._sizeOfArray - 1;
+
             }
             return default!;
         }
