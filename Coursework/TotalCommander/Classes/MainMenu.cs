@@ -346,73 +346,88 @@ namespace TotalCommander.Classes
                                 }
                                 string[] entities = commandText.Split(" ");
                                 int countOfEntities = entities.Length;
-                                string result = (string)_commandStorage[command].DynamicInvoke(
-                                        CommandFunctor(countOfEntities, command, param, countOfEntities>1 ? entities[1] : "", item)
-                                    )!;
-
-                                switch (command)
+                                try
                                 {
-                                    case "cd":
-                                        {
-                                            OnEnterButton(DirectoryService.StartPosition);
-                                            break;
-                                        }
-                                    case "pwd":
-                                        {
-                                            DesignOfWindow.ClearConsoleLine("/# " + result + " - Press enter", true);
-                                            break;
-                                        }
-                                    case "mv":
-                                        {
-                                            ClearSideOfMenu(!_isLeftRight);
-                                            ClearSideOfMenu(_isLeftRight);
 
-                                            this._leftMenu.UpdateMenu();
-                                            this._rightMenu?.UpdateMenu();
-                                            if(_isLeftRight)
-                                                this._rightMenu?.DisplayRightMenu(pageRight);
-                                            else
-                                                this._leftMenu.DisplayLeftMenu(pageLeft);
+                                    string result = (string)_commandStorage[command].DynamicInvoke(
+                                            CommandFunctor(countOfEntities, command, param, countOfEntities > 1 ? entities[1] : "", item)
+                                        )!;
 
 
-
-                                            index--;
-                                            if (_isLeftRight)
+                                    switch (command)
+                                    {
+                                        case "cd":
                                             {
-                                                if (index < 0)
-                                                {
-                                                    this.pageLeft--;
-                                                    if (this.pageLeft < 0)
-                                                    {
-                                                        this.pageLeft = 0;
-                                                        index = 0;
-                                                    }
-                                                    else
-                                                        index = this.pageLeft * sizeOfColumn + sizeOfColumn - 1;
-                                                }
+                                                OnEnterButton(DirectoryService.StartPosition);
+                                                break;
                                             }
-                                            else
+                                        case "pwd":
                                             {
-                                                if (index < 0)
-                                                {
-                                                    this.pageRight--;
-                                                    if (this.pageRight < 0)
-                                                    {
-                                                        this.pageRight = 0;
-                                                        index = 0;
-                                                    }
-                                                    else
-                                                        index = this.pageRight * sizeOfColumn + sizeOfColumn - 1;
-                                                }
+                                                DesignOfWindow.ClearConsoleLine("/# " + result + " - Press enter", true);
+                                                break;
                                             }
-                                            break;
-                                        }
-                                    default:
-                                        {
-                                            break;
-                                        }
+                                        case "mv":
+                                            {
+                                                ClearSideOfMenu(!_isLeftRight);
+                                                ClearSideOfMenu(_isLeftRight);
+
+                                                this._leftMenu.UpdateMenu();
+                                                this._rightMenu?.UpdateMenu();
+                                                if (_isLeftRight)
+                                                    this._rightMenu?.DisplayRightMenu(pageRight);
+                                                else
+                                                    this._leftMenu.DisplayLeftMenu(pageLeft);
+
+
+
+                                                index--;
+                                                if (_isLeftRight)
+                                                {
+                                                    if (index < 0)
+                                                    {
+                                                        this.pageLeft--;
+                                                        if (this.pageLeft < 0)
+                                                        {
+                                                            this.pageLeft = 0;
+                                                            index = 0;
+                                                        }
+                                                        else
+                                                            index = this.pageLeft * sizeOfColumn + sizeOfColumn - 1;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (index < 0)
+                                                    {
+                                                        this.pageRight--;
+                                                        if (this.pageRight < 0)
+                                                        {
+                                                            this.pageRight = 0;
+                                                            index = 0;
+                                                        }
+                                                        else
+                                                            index = this.pageRight * sizeOfColumn + sizeOfColumn - 1;
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        default:
+                                            {
+                                                break;
+                                            }
+                                    }
                                 }
+                                catch (Exception ex)
+                                {
+                                    string message = "***\nSource: " + ex.Source + "\nMessage: " + ex.Message
+                                        + "\nStackTrace:" + ex.StackTrace + "\n***";
+                                    StreamWriter sw = File.AppendText(Path.Combine(Directory.GetCurrentDirectory(),
+                                        "Local", "logs.txt"));
 
+                                    sw.WriteLine(message);
+
+                                    sw.Dispose();
+                                }
                             }
                             break;
                         }
