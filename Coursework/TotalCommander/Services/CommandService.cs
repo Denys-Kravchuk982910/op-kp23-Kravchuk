@@ -41,7 +41,8 @@ namespace TotalCommander.Services
 
                 if(File.Exists(sourcePath))
                 {
-                    File.Move(sourcePath, fullPathDestination);
+                    string dest = Path.Combine(fullPathDestination, destFileName);
+                    File.Move(sourcePath, dest);
                 }
             }
 

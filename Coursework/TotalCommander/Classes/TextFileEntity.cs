@@ -28,7 +28,6 @@ namespace TotalCommander.Classes
                     file += ".txt";
                 }
                 FileStream fs = File.Create(file);
-
                 StreamWriter sw = new StreamWriter(fs);
 
                 sw.WriteLine(this._insideContent);
@@ -36,6 +35,7 @@ namespace TotalCommander.Classes
                 sw.Dispose();
 
                 fs.Dispose();
+                _fileInfo = new FileInfo(file);
             }
         }
 
