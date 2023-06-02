@@ -38,9 +38,5 @@ namespace TotalCommander.Classes
             if(this._fileInfo != null)  
                 this._fileInfo.Delete();
         }
-        public override void MoveEntity(string source, string destination)
-        {
-            base.MoveEntity(source, destination);
-        }
     }
 }

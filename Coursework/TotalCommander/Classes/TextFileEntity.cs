@@ -18,13 +18,14 @@ namespace TotalCommander.Classes
 
         }
         public override void CreateEntity()
-        {
+         {
             string file = System.IO.Path.Combine(this.Path, this.Name);
             if (!File.Exists(file))
             {
                 if (!this.Name.EndsWith(".txt"))
                 {
                     this.Name += ".txt";
+                    file += ".txt";
                 }
                 FileStream fs = File.Create(file);
 
@@ -36,11 +37,6 @@ namespace TotalCommander.Classes
 
                 fs.Dispose();
             }
-        }
-
-        public override void MoveEntity(string source, string destination)
-        {
-            base.MoveEntity(source, destination);
         }
 
         public override void DeleteEntity()

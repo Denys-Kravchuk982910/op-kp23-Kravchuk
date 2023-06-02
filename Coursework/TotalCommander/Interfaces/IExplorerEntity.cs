@@ -9,7 +9,6 @@ namespace TotalCommander.Interfaces
     public interface IExplorerEntity
     {
         void CreateEntity();
-        void MoveEntity(string source, string destination);
         void DeleteEntity();
     }
 }
