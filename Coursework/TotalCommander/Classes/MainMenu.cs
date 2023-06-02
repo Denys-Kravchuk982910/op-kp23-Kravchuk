@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -325,50 +326,94 @@ namespace TotalCommander.Classes
                     case ConsoleKey.C:
                         {
                             string commandText = DesignOfWindow.ClearConsoleLine("/# ", true);
-                            string param = "";
-                            string command = "";
-
-                            int counter = 0;
-                            do
+                            if (!string.IsNullOrEmpty(commandText))
                             {
-                                command += commandText[counter];
-                                counter++;
-                            }
-                            while (counter < commandText.Length && commandText[counter] != ' ');
-                            counter++;
-
-                            for (int i = counter; i < commandText.Length; i++) 
-                            {
-                                param += commandText[i];
-                            }
-
-                            int countOfEntities = commandText.Split(" ").Length;
-                            string result = (string)_commandStorage[command].DynamicInvoke(
-                                countOfEntities > 1 ? 
-                                (command == "mv"?
-                                param + "_from_" + item.Path + "_from_" + item.Name : "")
+                                string param = "";
+                                string command = "";
                                 
-                                : item.Path
-                                )!;
+                                int counter = 0;
+                                do
+                                {
+                                    command += commandText[counter];
+                                    counter++;
+                                }
+                                while (counter < commandText.Length && commandText[counter] != ' ');
+                                counter++;
 
-                            switch (command)
-                            {
-                                case "cd":
-                                    {
-                                        OnEnterButton(DirectoryService.StartPosition);
-                                        break;
-                                    }
-                                case "pwd":
-                                    {
-                                        DesignOfWindow.ClearConsoleLine("/# " + result + " - Press enter", true);
-                                        break;
-                                    }
-                                default:
-                                    {
-                                        break;
-                                    }
+                                for (int i = counter; i < commandText.Length; i++)
+                                {
+                                    param += commandText[i];
+                                }
+                                string[] entities = commandText.Split(" ");
+                                int countOfEntities = entities.Length;
+                                string result = (string)_commandStorage[command].DynamicInvoke(
+                                        CommandFunctor(countOfEntities, command, param, countOfEntities>1 ? entities[1] : "", item)
+                                    )!;
+
+                                switch (command)
+                                {
+                                    case "cd":
+                                        {
+                                            OnEnterButton(DirectoryService.StartPosition);
+                                            break;
+                                        }
+                                    case "pwd":
+                                        {
+                                            DesignOfWindow.ClearConsoleLine("/# " + result + " - Press enter", true);
+                                            break;
+                                        }
+                                    case "mv":
+                                        {
+                                            ClearSideOfMenu(!_isLeftRight);
+                                            ClearSideOfMenu(_isLeftRight);
+
+                                            this._leftMenu.UpdateMenu();
+                                            this._rightMenu?.UpdateMenu();
+                                            if(_isLeftRight)
+                                                this._rightMenu?.DisplayRightMenu(pageRight);
+                                            else
+                                                this._leftMenu.DisplayLeftMenu(pageLeft);
+
+
+
+                                            index--;
+                                            if (_isLeftRight)
+                                            {
+                                                if (index < 0)
+                                                {
+                                                    this.pageLeft--;
+                                                    if (this.pageLeft < 0)
+                                                    {
+                                                        this.pageLeft = 0;
+                                                        index = 0;
+                                                    }
+                                                    else
+                                                        index = this.pageLeft * sizeOfColumn + sizeOfColumn - 1;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (index < 0)
+                                                {
+                                                    this.pageRight--;
+                                                    if (this.pageRight < 0)
+                                                    {
+                                                        this.pageRight = 0;
+                                                        index = 0;
+                                                    }
+                                                    else
+                                                        index = this.pageRight * sizeOfColumn + sizeOfColumn - 1;
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    default:
+                                        {
+                                            break;
+                                        }
+                                }
+
                             }
-
                             break;
                         }
                 }
@@ -382,7 +427,35 @@ namespace TotalCommander.Classes
             }
         }
 
-        public void OnEnterButton(string fullPath)
+        public string CommandFunctor(int countOfEntities, string command, 
+            string param, string entity, ExplorerEntity item)
+        {
+            string dirPosition = Path.Combine(item.Path, item.Name);
+            string element = "";
+            
+            if(countOfEntities > 1)
+            {
+
+                if (command == "mv")
+                {
+                    element = param + "_from_" + dirPosition + "_from_" + item.Name + "_from_" + (_isLeftRight ? _leftMenu.GetCurrentPosition() : 
+                        _rightMenu.GetCurrentPosition());
+
+                }
+                else 
+                    element = entity;
+            }
+            else
+            {
+                if(command == "pwd")
+                {
+                    element = dirPosition;
+                }
+            }    
+            return element;
+        }
+
+        public void OnEnterButton(string fullPath, bool isFlag = false)
         {
             if (_rightMenu == null)
             {
@@ -391,14 +464,13 @@ namespace TotalCommander.Classes
 
             if (_isLeftRight)
             {
-
                 _rightMenu.ClearItems();
+                _rightMenu.SetCurrentPosition(fullPath);
                 _rightMenu.SetNewItems(new List<ExplorerEntity>(
                     DirectoryService.GetInnerFromDirectory(
                     fullPath)
                     .Select(x => GetType(x))
                 ));
-                _rightMenu.SetCurrentPosition(fullPath);
 
                 isPrinted = true;
 
@@ -407,18 +479,17 @@ namespace TotalCommander.Classes
             if (!_isLeftRight)
             {
                 _leftMenu.ClearItems();
+                _leftMenu.SetCurrentPosition(fullPath);
                 _leftMenu.SetNewItems(new List<ExplorerEntity>(
                     DirectoryService.GetInnerFromDirectory(
                     fullPath)
                     .Select(x => GetType(x))
                 ));
-                _leftMenu.SetCurrentPosition(fullPath);
                 isPrinted = true;
             }
 
             ClearSideOfMenu(!_isLeftRight);
-
-
+                
         }
 
         public void ClearSideOfMenu(bool isLeftRight)

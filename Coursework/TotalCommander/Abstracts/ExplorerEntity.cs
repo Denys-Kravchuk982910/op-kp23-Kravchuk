@@ -28,11 +28,6 @@ namespace TotalCommander.Abstracts
             throw new NotImplementedException();
         }
 
-        public virtual void MoveEntity(string source, string destination)
-        {
-            throw new NotImplementedException();
-        }
-
         public override string ToString()
         {
             return this.Name;

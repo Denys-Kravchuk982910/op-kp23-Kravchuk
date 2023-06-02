@@ -82,7 +82,7 @@ namespace TotalCommander.Abstracts
         public void SetNewItems(List<ExplorerEntity> explorerEntities)
         {
             this._explorerEntities = new List<ExplorerEntity>();
-            this._explorerEntities.Add(new DirectoryEntity(new DirectoryInfo(Path.Combine(DirectoryService.StartPosition, 
+            this._explorerEntities.Add(new DirectoryEntity(new DirectoryInfo(Path.Combine(this.GetCurrentPosition(), 
                 ".."))));
             this._explorerEntities.AddRange( explorerEntities);
             double res = (double)this._explorerEntities.Count / 31;

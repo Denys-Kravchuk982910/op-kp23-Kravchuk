@@ -38,11 +38,6 @@ namespace TotalCommander.Classes
             }
         }
 
-        public override void MoveEntity(string source, string destination)
-        {
-            base.MoveEntity(source, destination);
-        }
-
 
     }
 }
