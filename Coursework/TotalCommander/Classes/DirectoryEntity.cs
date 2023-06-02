@@ -26,7 +26,7 @@ namespace TotalCommander.Classes
             string directory = System.IO.Path.Combine(this.Path, this.Name);
             if (!Directory.Exists(directory))
             {
-                Directory.CreateDirectory(directory);
+                _directoryInfo = Directory.CreateDirectory(directory);
             }
         }
 

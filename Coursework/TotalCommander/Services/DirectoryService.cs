@@ -27,20 +27,5 @@ namespace TotalCommander.Services
 
             return inners;
         }
-
-        public static void CreateDirectory (string path, string name)
-        {
-            Directory.CreateDirectory(Path.Combine(path, name));
-        }
-
-        public static void DeleteDirectory(string path)
-        {
-            Directory.Delete(path, true);
-        }
-
-        public static void MoveDirectory(string source, string destination)
-        {
-            Directory.Move(source, destination);
-        }
     }
 }

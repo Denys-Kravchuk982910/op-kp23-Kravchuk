@@ -30,6 +30,7 @@ namespace TotalCommander.Classes
 
                 FileStream fs = File.Create(file);
                 fs.Dispose();
+                _fileInfo = new FileInfo(file);
             }
         }
 
