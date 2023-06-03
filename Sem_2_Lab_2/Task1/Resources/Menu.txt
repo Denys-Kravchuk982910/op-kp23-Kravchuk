@@ -1,0 +1,2 @@
+﻿1. Add new note
+2. Get report
